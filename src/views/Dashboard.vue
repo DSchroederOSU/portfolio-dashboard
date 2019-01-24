@@ -22,7 +22,7 @@
 
     <div class="Chart">
       <h1 style="text-align:center;">Line</h1>
- 
+
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@
 export default {
   name: 'Dashboard',
   components: {
-    LineChart
+    
   },
   data : () => {
     return {
