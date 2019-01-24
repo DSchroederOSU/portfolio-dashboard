@@ -2,6 +2,7 @@
   <div>
     <TopNav/>
     <SideNav/>
+    <h1>Travis Deploy</h1>
   </div>
 </template>
 
