@@ -5,8 +5,10 @@ deploy:
   provider: heroku
   api_key:
     secure: XDID6NGQtar5HruJCh5zI7HpcX7/fSwNypoA3jahrliMOvJlz7opo4hmaFtphWrxfGrIpRsC+UyGzZzH73OKLCiq+37r+4mPS3zv4d9VTN1TYdWcahh9l8bCgBB96B5pfFuK0FGAzn/TQP/sWzFj4y/TGpyLMokmmckdN8wTHz5kj0JTZ6kXom56PCxdGJ3t0zftD2TOgWhYrcBG7j2IJgKjbvzSy0ZDlq46ur/HIQqCetUQRdRc6PsnhcyVursgga0ix4PbVRp9EOMk7UYWyeq8WBatn70I9sQJ/jal8EWvSklJ8Vz0lNOIUxH9UH7j0sBfvBhlNPlhaPwKn570Fdyf4H77uIk00913XhMNB2O7e+8UN/0eMidQ5pAgGzZz7gnRjAvukdMcXCEUM2ojppcg0/5YuWFGB24R4dFtHDC1lo7PcbOYA5PXuILAZS1/TmtM3xeVWYa+NWw7G7UZxbe/KLAIbhCedH3mRUhfX5k1pucQEm9nb2fdUVMvYLEE3V3sVyyLmUvinwK8ZUP9Drrwl5zKiQrWNHZEOwQMpWOWEZ3ZQwF9EnkaMsGWbQK/38Rdi96UyL0KhBNFrCEOyqh1YcIXdv493+/Y6UOg/K6U6CCasy6+ZQIv4oaf4ZDL3aL0oOLK4GsPTMr11q5oqblduIQ9V2CYbjhQt2rWQe8=
-  app:
-    develop: portfolio-dashboard-1
+  app: portfolio-dashboard-1
+  on:
+    repo: DSchroederOSU/portfolio-dashboard
+    branch: master
 install:
 - npm install
 before_script:
