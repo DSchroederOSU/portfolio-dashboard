@@ -2,6 +2,10 @@
   <div id="sidebar">
      <div class="col-md-12">
        <ul class="nav nav-pills ">
+         <router-link class="nav-item" to="/">
+           <a class="nav-link active">Home</a>
+         </router-link>
+
           <li class="nav-item" onclick="dashboard()">
             <a class="nav-link active">Dashboard</a>
           </li>
@@ -42,20 +46,5 @@ export default {
 
 #sidebar li {
   width: 100%;
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+} 
 </style>
