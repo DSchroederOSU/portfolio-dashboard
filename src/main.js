@@ -2,6 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+window.$ = require('jquery')
+window.JQuery = require('jquery')
+
+
+Vue.use(VueAxios, axios)
+Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false
 
