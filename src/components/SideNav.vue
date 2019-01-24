@@ -27,6 +27,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+#sidebar {
+  padding-top: 5vh;
+  width: inherit;
+  min-width: 220px;
+  max-width: 220px;
+  background-color:#f5f5f5;
+  float: left;
+  height:100%;
+  position:relative;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+#sidebar li {
+  width: 100%;
+}
+
 h3 {
   margin: 40px 0 0;
 }
