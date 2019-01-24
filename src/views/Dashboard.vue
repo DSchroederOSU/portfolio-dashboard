@@ -22,16 +22,13 @@
 
     <div class="Chart">
       <h1 style="text-align:center;">Line</h1>
-
-      <line-chart/>
+ 
     </div>
   </div>
 </template>
 
 <script>
 
-import LineChart from '@/components/linechart.js'
-import { Line } from 'vue-chartjs'
 export default {
   name: 'Dashboard',
   components: {
