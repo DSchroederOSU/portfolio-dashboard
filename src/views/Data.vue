@@ -27,7 +27,7 @@
       <!--BREWERIES-->
       <div class="mt-3 ml-3" v-if="breweries">
         <div v-for="item in breweries">
-          <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
+          <BreweryCard :brewery_name="item.name" :website="item.website" :address="item.address"></BreweryCard>
         </div>
       </div>
 
@@ -143,6 +143,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 a {
+  font-size: 1.2rem;
   text-decoration: none;
 }
 .content-container{
