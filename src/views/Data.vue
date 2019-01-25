@@ -1,19 +1,28 @@
 <template>
   <div class="view-container">
     <ul class="nav">
-      <li class="nav-item" v-on:click="breweries">
+      <li class="nav-item" v-on:click="fetchBreweries">
         <a class="nav-link active" href="#">Breweries</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-on:click="fetchBeers">
         <a class="nav-link" href="#">Beers</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Styles</a>
       </li>
     </ul>
-    <div class="mt-3 ml-3">
-      <h1 id="header">{{header}}</h1>
-      {{data}}
+    <h1 id="header">{{header}}</h1>
+    <div class="mt-3 ml-3" v-if="breweries">
+      <div v-for="item in breweries">
+        <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
+      </div>
+    </div>
+    <div class="mt-3 ml-3" v-if="beers">
+      <div v-for="item in beers">
+        <p>
+          <BeerCard :beer_name="item.name" :description="item.description" :abv="item.abv" :ibu="item.ibu" :brewery="item.brewery.name"></BeerCard>
+        </p>
+      </div>
     </div>
     <!-- <span v-on:click="dashboard">Hello</span> -->
 
@@ -24,28 +33,48 @@
 
 <script>
 import {login} from '../authenticate.js'
+import {getBreweries, getBeers} from '../data_service.js'
+import BreweryCard from '@/components/BreweryCard.vue'
+import BeerCard from '@/components/BeerCard.vue'
 
 export default {
   name: 'Data',
   components: {
+    BreweryCard,
+    BeerCard
   },
   data : () => {
     return {
       header : '',
-      data : null
+      breweries : null,
+      beers : null,
+      bearer_token : null
     }
   },
   async beforeCreate () {
-    let data = await this.axios.get('https://brewery-api.herokuapp.com/breweries')
-    console.log(login())
-    this.data = data
+    //let data = await this.axios.get('https://brewery-api.herokuapp.com/breweries')
   },
-  async mounted () {
-
+  created() {
+    this.header = "Breweries"
+    this.fetchBreweries();
   },
   methods: {
-    breweries: function () {
+    async fetchBreweries() {
+      this.beers = null;
       this.header = "Breweries"
+      let token = await login()
+      this.bearer_token = token
+      let breweries = await getBreweries(this.bearer_token)
+      this.breweries = breweries.breweries
+
+    },
+    async fetchBeers() {
+      this.breweries = null;
+      this.header = "Beers"
+      let token = await login()
+      this.bearer_token = token
+      let beers = await getBeers(this.bearer_token)
+      this.beers = beers.beer
     }
   }
 }
