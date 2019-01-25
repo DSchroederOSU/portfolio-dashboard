@@ -1,8 +1,7 @@
 import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export async function getBreweries(token) {
-  console.log(token)
+export async function getBreweries(token) { 
   let response = await
     axios.get('https://brewery-api.herokuapp.com/breweries',
     {
@@ -15,7 +14,6 @@ export async function getBreweries(token) {
 }
 
 export async function getBeers(token) {
-  console.log(token)
   let response = await
     axios.get('https://brewery-api.herokuapp.com/beers?detailed=true',
     {
@@ -24,7 +22,6 @@ export async function getBeers(token) {
           'Authorization': `Bearer ${token}`
       }
     })
-    console.log(response.data)
   return response.data;
 }
 //module.exports.login = login();

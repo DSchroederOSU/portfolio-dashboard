@@ -1,5 +1,5 @@
 <template>
-  <div class="card" style="width: 20vw;">
+  <div class="card" style="width: 50vw;">
     <div class="card-body">
       <h5 class="card-title">{{beer_name}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">By: {{brewery}}</h6>

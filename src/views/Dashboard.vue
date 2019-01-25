@@ -1,29 +1,24 @@
 <template>
   <div class="view-container">
+    <div class="row mt-4">
+      <div class="col-sm-4">
+        <h1 id="header">The Brewery Emporium</h1>
+        <h4>Created by: <a href="https://github.com/DSchroederOSU/Brewery_API">Daniel Schroeder</a></h4>
+        <h4>Hosted on: <a href="https://portfolio-dashboard-1.herokuapp.com/">Heroku</a></h4>
+        <h4>Commits: <a href="https://github.com/DSchroederOSU/portfolio-dashboard/commits/master">{{src_commits}}</a></h4>
+      </div>
+    </div>
 
-    <!-- <span v-on:click="dashboard">Hello</span> -->
+    <h2 class="mt-5">Powered By:</h2>
     <div class="row mt-4">
       <div class="col-sm-4">
         <h1 id="header">Brewery API</h1>
         <h4>Created by: <a href="https://github.com/DSchroederOSU/Brewery_API">Daniel Schroeder</a></h4>
-        <h4>Hosted on <a href="https://brewery-api.herokuapp.com/">Heroku</a></h4>
+        <h4>Hosted on: <a href="https://brewery-api.herokuapp.com/">Heroku</a></h4>
+        <h4>Commits: <a href="https://github.com/DSchroederOSU/Brewery_API/commits/master">{{api_commits}}</a></h4>
       </div>
-      <div class="col-sm-3">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Repository Commits</h5>
-            <h3 class="card-text">{{commits}}</h3>
-            <a href="https://github.com/DSchroederOSU/Brewery_API/commits/master" class="btn btn-primary">View Commits</a>
-          </div>
-        </div>
-      </div>
-
     </div>
-
-    <div class="Chart">
-      <h1 style="text-align:center;">Line</h1>
-
-    </div>
+ 
   </div>
 </template>
 
@@ -32,16 +27,19 @@
 export default {
   name: 'Dashboard',
   components: {
-    
+
   },
   data : () => {
     return {
-      commits : ''
+      api_commits : '',
+      src_commits : '',
     }
   },
   async beforeCreate () {
-    let commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors')
-    this.commits = commits.data[0].contributions
+    let api_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors')
+    let src_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/portfolio-dashboard/contributors')
+    this.api_commits = api_commits.data[0].contributions
+    this.src_commits = src_commits.data[0].contributions
   },
   async mounted () {
 

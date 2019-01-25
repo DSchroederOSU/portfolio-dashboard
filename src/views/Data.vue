@@ -1,6 +1,6 @@
 <template>
   <div class="view-container">
-    <ul class="nav">
+    <ul class="nav mb-5">
       <li class="nav-item" v-on:click="fetchBreweries">
         <a class="nav-link active" href="#">Breweries</a>
       </li>
@@ -11,7 +11,7 @@
         <a class="nav-link" href="#">Styles</a>
       </li>
     </ul>
-    <h1 id="header">{{header}}</h1>
+    <h1 class=" ml-3" id="header">{{header}}</h1>
     <div class="mt-3 ml-3" v-if="breweries">
       <div v-for="item in breweries">
         <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
