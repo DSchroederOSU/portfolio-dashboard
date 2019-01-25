@@ -20,10 +20,10 @@
           <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
         </div>
         <div class="col-md-3">
-          <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+          <TrackerWidget :value='300' :title='`Other`' :speed='`1500`'></TrackerWidget>
         </div>
         <div class="col-md-3">
-          <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+          <TrackerWidget :value='`${this.random_num}`' :title='`Random`' :speed='`1500`'></TrackerWidget>
         </div>
       </div>
 
@@ -33,19 +33,18 @@
             <div class="Chart">
               <h3 style="text-align:center;">A Line Chart of Random Data</h3>
               <h5 style="text-align:center;">Because Why Not?</h5>
-              <chart />
+              <chart :height="300" />
             </div>
           </div>
           <div class="col-md-6">
-            <div class="Chart">
+            <div class="Chart" >
               <h3 style="text-align:center;">A Dynamically Rendered Chart</h3>
-              <h5 style="text-align:center;">Because Why Not?</h5>
-              <chart />
+              <a id="clickme" v-on:click="toggle"><h5 style="text-align:center;">Click Me</h5></a>
+              <dynamic-chart v-if="mount_chart" :height="300" :labels='this.labels' :chartdata='this.chartdata' />
             </div>
+
           </div>
         </div>
-
-
 
     </div>
 
@@ -68,27 +67,34 @@
 import {getAllDocuments} from '../data_service.js'
 import TrackerWidget from '@/components/TrackerWidget.vue'
 import Chart from '@/components/Chart.vue'
+import DynamicChart from '@/components/DynamicChart.vue'
 export default {
   name: 'Dashboard',
   props: ['token'],
   components: {
     TrackerWidget,
-    Chart
+    Chart,
+    DynamicChart
   },
   data : () => {
     return {
       api_commits : '',
       src_commits : '',
       db_objects : '',
-      bearer_token : null,
-      loaded: false
+      loaded: false,
+      labels: [],
+      chartdata: [],
+      random_num: 0,
+      mount_chart: false
     }
   },
   async created () {
     let api_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors')
     let src_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/portfolio-dashboard/contributors')
     let db_objects = await getAllDocuments(this.token)
+
     this.db_objects = db_objects
+    this.random_num = Math.floor(Math.random() * 2000)
     this.api_commits = api_commits.data[0].contributions
     this.src_commits = src_commits.data[0].contributions
   },
@@ -116,27 +122,61 @@ export default {
       $('.widget').each(function () {
         $(this).css("background-color", colors.pop());
       });
-      this.loaded = true;
+
+      this.loaded = true
     });
   },
-  async mounted () {
-
+  mounted () {
+    this.filldata();
   },
   methods: {
-      dashboard: function () {
-        console.log("Dashboard")
-        $('#header').css('background-color', 'red');
+      toggle () {
+        this.mount_chart = !this.mount_chart
+        setTimeout(function(){
+                this.filldata()
+            }.bind(this), 1000);
       },
       filldata () {
 
+          let colors = ['#ef5350', '#ffa726', '#66bb6a', '#29b6f6']
+          this.labels = this.shuffle(['January', 'February', 'March', 'April', 'May', 'June', 'July'])
+          this.chartdata = Array.from({length: 7}, () => Math.floor(Math.random() * 40))
+
+          this.mount_chart = true;
+
+
+
+      },
+      // taken from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+      shuffle (array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+
+          // And swap it with the current element.
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+        return array;
       }
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-a {
+#clickme{
+  color: #66bb6a;
+  cursor: pointer;
   text-decoration: none;
+}
+#clickme :hover{
+  color: grey
 }
 
 .view-container{
@@ -146,7 +186,7 @@ a {
 }
 
   .Chart {
-    height: 50vh;
+    height: 45vh;
     padding: 20px;
     box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .4);
     border-radius: 20px;
