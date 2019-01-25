@@ -2,7 +2,7 @@
   <div id="app">
     <TopNav/>
     <SideNav/>
-    <router-view/>
+    <router-view id="viewport"/>
   </div>
 </template>
 
@@ -23,11 +23,16 @@ export default {
 
 <style lang="scss">
 body {
-  margin-top: 60px;
-  height: 100vh;
+
 }
 
-#app{
-  height: 100%;
+#viewport{
+  position: absolute;
+  top: 60px;
+  left: 220px;
+  overflow: auto;
+  height: calc(100% - 60px);
+  width: calc(100% - 220px);
+  padding: 30px;
 }
 </style>

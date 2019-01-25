@@ -38,8 +38,10 @@ export default {
   max-width: 220px;
   background-color:#f5f5f5;
   float: left;
-  height:100%;
-  position:relative;
+  top: 60px;
+  left: 0;
+  position: absolute;
+  height: calc(100% - 60px);
   overflow-y:auto;
   overflow-x:hidden;
 }

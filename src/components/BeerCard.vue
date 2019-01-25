@@ -1,6 +1,6 @@
 <template>
-  <div class="card" style="width: 50vw;">
-    <div class="card-body">
+  <div class="card" style="width: 100%;">
+    <div class="card-body ml-5">
       <h5 class="card-title">{{beer_name}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">By: {{brewery}}</h6>
       <h6 class="card-subtitle mb-2 text-muted">ABV: {{abv}}</h6>

@@ -7,7 +7,7 @@
         <h4>Hosted on: <a href="https://portfolio-dashboard-1.herokuapp.com/">Heroku</a></h4>
         <h4>Commits: <a href="https://github.com/DSchroederOSU/portfolio-dashboard/commits/master">{{src_commits}}</a></h4>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4 mx-auto">
       <h2 class="mt-5">Powered By:</h2>
       </div>
       <div class="col-sm-4">

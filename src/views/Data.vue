@@ -1,41 +1,53 @@
 <template>
-  <div class="view-container">
-    <ul class="nav mb-5">
-      <li class="nav-item" v-on:click="fetchBreweries">
-        <a class="nav-link active" href="#">Breweries</a>
-      </li>
-      <li class="nav-item" v-on:click="fetchBeers">
-        <a class="nav-link" href="#">Beers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Styles</a>
-      </li>
-    </ul>
-    <h1 class=" ml-3" id="header">{{header}}</h1>
-    <div class="mt-3 ml-3" v-if="loading">
-      <div class="spinner-border text-primary align-middle" role="status">
-        <span class="sr-only">Loading...</span>
+
+    <div class="content-container">
+      <ul class="nav mb-5">
+        <li class="nav-item" v-on:click="fetchBreweries">
+          <a class="nav-link active" href="#">Breweries</a>
+        </li>
+        <li class="nav-item" v-on:click="fetchBeers">
+          <a class="nav-link" href="#">Beers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Styles</a>
+        </li>
+      </ul>
+      <h1 class=" ml-3" id="header">{{header}}</h1>
+      <div class="mt-3 ml-3" v-if="loading">
+        <div class="spinner-border text-primary align-middle" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+
+      <div class="mt-3 ml-3" v-if="breweries">
+        <div v-for="item in breweries">
+          <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
+        </div>
+      </div>
+      <div class="mt-3 ml-3" v-if="beers"> 
+          <div class="accordion" id="accordionExample">
+              <div v-for="(item, index) in beers">
+                <div class="card">
+                  <div class="card-header" v-bind:id='`heading${index}`'>
+                    <h2 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" v-bind:data-target='`#collapse${index}`'
+                        aria-expanded="true" v-bind:aria-controls='`collapse${index}`'>
+                        {{item.brewery}}
+                      </button>
+                    </h2>
+                  </div>
+                  <div v-bind:id='`collapse${index}`' class="collapse" v-bind:aria-labelledby='`heading${index}`' data-parent="#accordionExample">
+                      <div v-for="beer in item.data">
+                        <BeerCard :beer_name="beer.name" :description="item.description" :abv="beer.abv" :ibu="beer.ibu" :brewery="beer.brewery.name"></BeerCard>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
       </div>
     </div>
 
-
-    <div class="mt-3 ml-3" v-if="breweries">
-      <div v-for="item in breweries">
-        <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
-      </div>
-    </div>
-    <div class="mt-3 ml-3" v-if="beers">
-      <div v-for="item in beers">
-        <p>
-          <BeerCard :beer_name="item.name" :description="item.description" :abv="item.abv" :ibu="item.ibu" :brewery="item.brewery.name"></BeerCard>
-        </p>
-      </div>
-    </div>
-    <!-- <span v-on:click="dashboard">Hello</span> -->
-
-
-
-  </div>
 </template>
 
 <script>
@@ -88,7 +100,7 @@ export default {
       this.bearer_token = token
       let beers = await getBeers(this.bearer_token)
       this.loading = false;
-      this.beers = beers.beer
+      this.beers = beers
     }
   }
 }
@@ -98,15 +110,16 @@ export default {
 a {
   text-decoration: none;
 }
+.content-container{
+
+  overflow-y: auto;
+  height: auto;
+}
 .spinner-border{
   width: 10vw;
   height: 10vw;
 }
-.view-container{
-  height: 100%;
-  overflow: hidden;
-  padding: 30px;
-}
+
 .Chart {
   max-width: 50vw;
   width: auto;

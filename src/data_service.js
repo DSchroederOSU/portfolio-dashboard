@@ -1,7 +1,7 @@
 import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export async function getBreweries(token) { 
+export async function getBreweries(token) {
   let response = await
     axios.get('https://brewery-api.herokuapp.com/breweries',
     {
@@ -15,13 +15,24 @@ export async function getBreweries(token) {
 
 export async function getBeers(token) {
   let response = await
-    axios.get('https://brewery-api.herokuapp.com/beers?detailed=true',
-    {
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-      }
-    })
-  return response.data;
+  axios.get('https://brewery-api.herokuapp.com/beers?detailed=true',
+  {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+  })
+
+  //reduce to group by brewery name
+  let result = response.data.beer.reduce(function (r, a) {
+    r[a.brewery.name] = r[a.brewery.name] || [];
+    r[a.brewery.name].push(a);
+    return r;
+  }, Object.create(null));
+  let to_return = [];
+  jQuery.each(result, function(i, val) {
+    to_return.push({brewery: i, data: val})
+  });
+  return to_return;
 }
 //module.exports.login = login();
