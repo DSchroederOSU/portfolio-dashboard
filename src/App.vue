@@ -2,7 +2,7 @@
   <div id="app">
     <TopNav/>
     <SideNav/>
-    <router-view id="viewport"/>
+    <router-view id="viewport" :token='`${this.bearer_token}`'/>
   </div>
 </template>
 
@@ -11,13 +11,22 @@
 
 import SideNav from '@/components/SideNav.vue'
 import TopNav from '@/components/TopNav.vue'
-
+import {login} from './authenticate.js'
 export default {
   name: 'Dashboard',
   components: {
     SideNav,
     TopNav
-  }
+  },
+  data : () => {
+    return {
+      bearer_token : null
+    }
+  },
+  async created() {
+    let token = await login()
+    this.bearer_token = token
+  },
 }
 </script>
 

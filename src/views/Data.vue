@@ -18,17 +18,17 @@
 
       <!--BREWERIES-->
       <div class="mt-3 ml-3" v-show="breweries">
-        <BreweryCard :token='`${this.bearer_token}`'></BreweryCard>
+        <BreweryCard></BreweryCard>
       </div>
 
       <!--BEERS-->
       <div class="mt-3 ml-3" v-show="beers">
-        <BeerCard :token='`${this.bearer_token}`'> </BeerCard>
+        <BeerCard> </BeerCard>
       </div>
 
       <!--STYLES-->
       <div class="mt-3 ml-3" v-show="styles">
-        <StyleCard :token='`${this.bearer_token}`'> </StyleCard>
+        <StyleCard> </StyleCard>
       </div>
     </div>
 
@@ -42,6 +42,7 @@ import StyleCard from '@/components/StyleCard.vue'
 
 export default {
   name: 'Data',
+  props: ['token'],
   components: {
     BreweryCard,
     BeerCard,
@@ -53,8 +54,7 @@ export default {
       header : '',
       breweries : false,
       styles : false,
-      beers: false,
-      bearer_token : null
+      beers: false
     }
   },
   async beforeCreate () {
@@ -62,8 +62,6 @@ export default {
   },
   async created() {
     this.header = "Breweries"
-    let token = await login()
-    this.bearer_token = token
     this.mountBreweries()
   },
   mounted () {

@@ -1,8 +1,23 @@
 import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export async function getBreweries(token) {
-  console.log("Making breweries call")
+export async function getAllDocuments(token) {
+  let options = { headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+  }
+  let count = 0;
+  let response = await axios.get('https://brewery-api.herokuapp.com/breweries', options)
+  count+=response.data.breweries.length;
+  response = await axios.get('https://brewery-api.herokuapp.com/styles', options)
+  count+=response.data.styles.length;
+  response = await axios.get('https://brewery-api.herokuapp.com/beers', options)
+  count+=response.data.beer.length;
+  return count;
+}
+
+export async function getBreweries(token) { 
   let response = await
     axios.get('https://brewery-api.herokuapp.com/breweries',
     {

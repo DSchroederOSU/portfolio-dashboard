@@ -8,27 +8,29 @@
         <h5>API: <a href="https://github.com/DSchroederOSU/Brewery_API">Custom Brewery API</a></h5>
       </div>
     </div>
-  <div class="row mt-4">
-    <div class="col-md-3">
+    <div class="row mt-4 w-100">
+      <div class="col-md-3">
+        <TrackerWidget :value='`${this.db_objects}`' :title='`API Objects`' :speed='`1500`'></TrackerWidget>
+      </div>
+      <div class="col-md-3">
+        <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+      </div>
+      <div class="col-md-3">
+        <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+      </div>
+      <div class="col-md-3">
+        <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+      </div>
     </div>
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-3">
-    </div>
-  </div>
-<h5>Commits: <a href="https://github.com/DSchroederOSU/portfolio-dashboard/commits/master">{{src_commits}}</a></h5>
-<TrackerWidget></TrackerWidget>
-
-
   </div>
 </template>
 
 <script>
+import {getAllDocuments} from '../data_service.js'
 import TrackerWidget from '@/components/TrackerWidget.vue'
 export default {
   name: 'Dashboard',
+  props: ['token'],
   components: {
     TrackerWidget,
   },
@@ -36,13 +38,44 @@ export default {
     return {
       api_commits : '',
       src_commits : '',
+      db_objects : '',
+      bearer_token : null
     }
   },
-  async beforeCreate () {
+  async created () {
+    console.log(this.token)
     let api_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors')
     let src_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/portfolio-dashboard/contributors')
+    let db_objects = await getAllDocuments(this.token)
+    this.db_objects = db_objects
     this.api_commits = api_commits.data[0].contributions
     this.src_commits = src_commits.data[0].contributions
+  },
+  updated() {
+    this.$nextTick(() => {
+      $('.animate-count').each(function () {
+          $(this).prop('Counter', 0).animate({
+              Counter: $(this).data('to')
+          }, {
+              duration: $(this).data('speed'),
+              easing: 'swing',
+              step: function (now) {
+                  $(this).text(Math.ceil(now));
+              }
+          });
+      });
+
+      //set random background color
+      let colors = ['#ef5350', '#ffa726', '#66bb6a', '#29b6f6']
+      let icons = ['fa-folder', 'fa-cube', 'fa-tasks', 'fa-globe-americas ']
+      $('.widget-icon').each(function () {
+        $(this).addClass(icons.pop());
+      });
+
+      $('.widget').each(function () {
+        $(this).css("background-color", colors.pop());
+      });
+    });
   },
   async mounted () {
 
