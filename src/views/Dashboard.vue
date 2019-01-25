@@ -1,6 +1,6 @@
 <template>
   <div class="view-container">
-    <div class="row mt-4">
+    <div class="row">
       <div class="col-sm-8">
         <h1 id="header">The Brewery Emporium</h1>
         <h5>Created by: <a href="https://github.com/DSchroederOSU/Brewery_API">Daniel Schroeder</a></h5>
@@ -8,42 +8,83 @@
         <h5>API: <a href="https://github.com/DSchroederOSU/Brewery_API">Custom Brewery API</a></h5>
       </div>
     </div>
-    <div class="row mt-4 w-100">
-      <div class="col-md-3">
-        <TrackerWidget :value='`${this.db_objects}`' :title='`API Objects`' :speed='`1500`'></TrackerWidget>
+
+    <!-- Data -->
+    <div v-show="loaded">
+
+      <div class="row mt-4 w-100" >
+        <div class="col-md-3">
+          <TrackerWidget :value='`${this.db_objects}`' :title='`API Objects`' :speed='`1500`'></TrackerWidget>
+        </div>
+        <div class="col-md-3">
+          <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+        </div>
+        <div class="col-md-3">
+          <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+        </div>
+        <div class="col-md-3">
+          <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+        </div>
       </div>
-      <div class="col-md-3">
-        <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
-      </div>
-      <div class="col-md-3">
-        <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
-      </div>
-      <div class="col-md-3">
-        <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
-      </div>
+
+
+        <div class="row" v-if="loaded">
+          <div class="col-md-6">
+            <div class="Chart">
+              <h3 style="text-align:center;">A Line Chart of Random Data</h3>
+              <h5 style="text-align:center;">Because Why Not?</h5>
+              <chart />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="Chart">
+              <h3 style="text-align:center;">A Dynamically Rendered Chart</h3>
+              <h5 style="text-align:center;">Because Why Not?</h5>
+              <chart />
+            </div>
+          </div>
+        </div>
+
+
+
     </div>
+
+
+    <table class="h-75 w-100" v-show="!loaded" style="text-align: center;">
+      <tbody>
+        <tr>
+          <td class="align-middle">
+            <div class="spinner-border text-primary mx-auto" style="width:200px; height: 200px;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
 import {getAllDocuments} from '../data_service.js'
 import TrackerWidget from '@/components/TrackerWidget.vue'
+import Chart from '@/components/Chart.vue'
 export default {
   name: 'Dashboard',
   props: ['token'],
   components: {
     TrackerWidget,
+    Chart
   },
   data : () => {
     return {
       api_commits : '',
       src_commits : '',
       db_objects : '',
-      bearer_token : null
+      bearer_token : null,
+      loaded: false
     }
   },
   async created () {
-    console.log(this.token)
     let api_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors')
     let src_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/portfolio-dashboard/contributors')
     let db_objects = await getAllDocuments(this.token)
@@ -75,6 +116,7 @@ export default {
       $('.widget').each(function () {
         $(this).css("background-color", colors.pop());
       });
+      this.loaded = true;
     });
   },
   async mounted () {
@@ -84,6 +126,9 @@ export default {
       dashboard: function () {
         console.log("Dashboard")
         $('#header').css('background-color', 'red');
+      },
+      filldata () {
+
       }
   }
 }
@@ -99,12 +144,12 @@ a {
   overflow: hidden;
   padding: 30px;
 }
-.Chart {
-  max-width: 50vw;
-  width: auto;
-  padding: 20px;
-  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, .2);
-  border-radius: 10px;
-  margin: 50px 0;
-}
+
+  .Chart {
+    height: 50vh;
+    padding: 20px;
+    box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .4);
+    border-radius: 20px;
+    margin: 50px 0;
+  }
 </style>
