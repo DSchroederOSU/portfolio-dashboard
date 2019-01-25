@@ -1,33 +1,36 @@
 <template>
   <div class="view-container">
     <div class="row mt-4">
-      <div class="col-sm-4">
+      <div class="col-sm-8">
         <h1 id="header">The Brewery Emporium</h1>
-        <h4>Created by: <a href="https://github.com/DSchroederOSU/Brewery_API">Daniel Schroeder</a></h4>
-        <h4>Hosted on: <a href="https://portfolio-dashboard-1.herokuapp.com/">Heroku</a></h4>
-        <h4>Commits: <a href="https://github.com/DSchroederOSU/portfolio-dashboard/commits/master">{{src_commits}}</a></h4>
-      </div>
-      <div class="col-sm-4">
-      <h2 class="mt-5">Powered By:</h2>
-      </div>
-      <div class="col-sm-4">
-        <h1 id="header">Brewery API</h1>
-        <h4>Created by: <a href="https://github.com/DSchroederOSU/Brewery_API">Daniel Schroeder</a></h4>
-        <h4>Hosted on: <a href="https://brewery-api.herokuapp.com/">Heroku</a></h4>
-        <h4>Commits: <a href="https://github.com/DSchroederOSU/Brewery_API/commits/master">{{api_commits}}</a></h4>
+        <h5>Created by: <a href="https://github.com/DSchroederOSU/Brewery_API">Daniel Schroeder</a></h5>
+        <h5>Hosted on: <a href="https://portfolio-dashboard-1.herokuapp.com/">Heroku</a></h5>
+        <h5>API: <a href="https://github.com/DSchroederOSU/Brewery_API">Custom Brewery API</a></h5>
       </div>
     </div>
+  <div class="row mt-4">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-3">
+    </div>
+  </div>
+<h5>Commits: <a href="https://github.com/DSchroederOSU/portfolio-dashboard/commits/master">{{src_commits}}</a></h5>
+<TrackerWidget></TrackerWidget>
 
 
   </div>
 </template>
 
 <script>
-
+import TrackerWidget from '@/components/TrackerWidget.vue'
 export default {
   name: 'Dashboard',
   components: {
-
+    TrackerWidget,
   },
   data : () => {
     return {

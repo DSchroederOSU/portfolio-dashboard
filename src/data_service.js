@@ -2,6 +2,7 @@ import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export async function getBreweries(token) {
+  console.log("Making breweries call")
   let response = await
     axios.get('https://brewery-api.herokuapp.com/breweries',
     {

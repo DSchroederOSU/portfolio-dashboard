@@ -13,6 +13,9 @@
        <router-link class="nav-item" to="/architecture">
          <a class="nav-link align-middle mx-auto w-100">Architecture</a>
        </router-link>
+       <router-link class="nav-item" to="/contribute">
+         <a class="nav-link align-middle mx-auto w-100">Contribute</a>
+       </router-link>
      </ul>
    </div> <!--/end content-->
 </template>

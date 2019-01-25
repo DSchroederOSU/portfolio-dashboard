@@ -4,62 +4,31 @@
 
       <!--NAV LINKS-->
       <ul class="nav mb-5">
-        <li class="nav-item" v-on:click="fetchBreweries">
+        <li class="nav-item" v-on:click="mountBreweries">
           <a class="nav-link active" href="javascript:void(0);">Breweries</a>
         </li>
-        <li class="nav-item" v-on:click="fetchBeers">
+        <li class="nav-item" v-on:click="mountBeers">
           <a class="nav-link" href="javascript:void(0);">Beers</a>
         </li>
-        <li class="nav-item" v-on:click="fetchStyles">
+        <li class="nav-item" v-on:click="mountStyles">
           <a class="nav-link" href="javascript:void(0);">Styles</a>
         </li>
       </ul>
       <h1 class=" ml-3" id="header">{{header}}</h1>
 
-      <!--LOADING-->
-      <div class="mt-3 ml-3" v-if="loading">
-        <div class="spinner-border text-primary align-middle" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-
-
       <!--BREWERIES-->
-      <div class="mt-3 ml-3" v-if="breweries">
-        <div v-for="item in breweries">
-          <BreweryCard :brewery_name="item.name" :website="item.website" :address="item.address"></BreweryCard>
-        </div>
+      <div class="mt-3 ml-3" v-show="breweries">
+        <BreweryCard :token='`${this.bearer_token}`'></BreweryCard>
       </div>
 
       <!--BEERS-->
-      <div class="mt-3 ml-3" v-if="beers">
-        <div class="accordion" id="beerAccordian">
-          <div v-for="(item, index) in beers">
-            <div class="card">
-              <div class="card-header" v-bind:id='`heading${index}`'>
-                <h2 class="mb-0">
-                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" v-bind:data-target='`#collapse${index}`'
-                    aria-expanded="true" v-bind:aria-controls='`collapse${index}`'>
-                    {{item.brewery}}
-                  </button>
-                </h2>
-              </div>
-              <div v-bind:id='`collapse${index}`' class="collapse" v-bind:aria-labelledby='`heading${index}`' data-parent="#beerAccordian">
-                <div v-for="beer in item.data">
-                  <BeerCard :beer_name="beer.name" :description="item.description" :abv="beer.abv" :ibu="beer.ibu" :brewery="beer.brewery.name"></BeerCard>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div class="mt-3 ml-3" v-show="beers">
+        <BeerCard :token='`${this.bearer_token}`'> </BeerCard>
       </div>
 
       <!--STYLES-->
-      <div class="mt-3 ml-3" v-if="styles">
-        <ul class="list-group" v-for="item in styles">
-          <li class="list-group-item">{{item.name}}</li>
-        </ul>
+      <div class="mt-3 ml-3" v-show="styles">
+        <StyleCard :token='`${this.bearer_token}`'> </StyleCard>
       </div>
     </div>
 
@@ -67,23 +36,24 @@
 
 <script>
 import {login} from '../authenticate.js'
-import {getBreweries, getBeers, getStyles} from '../data_service.js'
 import BreweryCard from '@/components/BreweryCard.vue'
 import BeerCard from '@/components/BeerCard.vue'
+import StyleCard from '@/components/StyleCard.vue'
 
 export default {
   name: 'Data',
   components: {
     BreweryCard,
-    BeerCard
+    BeerCard,
+    StyleCard
   },
   data : () => {
     return {
       loading : null,
       header : '',
-      breweries : null,
-      styles : null,
-      beers : null,
+      breweries : false,
+      styles : false,
+      beers: false,
       bearer_token : null
     }
   },
@@ -92,50 +62,31 @@ export default {
   },
   async created() {
     this.header = "Breweries"
-    this.fetchBreweries();
     let token = await login()
     this.bearer_token = token
+    this.mountBreweries()
   },
   mounted () {
 
   },
   methods: {
-    async fetchBreweries() {
-      if(this.loading!=true){
-        this.loading = true;
-        this.breweries = null;
-        this.beers = null;
-        this.styles = null;
-        this.header = "Breweries"
-        let breweries = await getBreweries(this.bearer_token)
-        this.loading = false;
-        this.breweries = breweries;
-      }
+    mountBreweries() {
+      this.header = "Breweries"
+      this.breweries = true;
+      this.styles = false;
+      this.beers = false;
     },
-    async fetchBeers() {
-      if(this.loading!=true){
-        this.loading = true;
-        this.breweries = null;
-        this.beers = null;
-        this.styles = null;
-        this.header = "Beers"
-        let beers = await getBeers(this.bearer_token)
-        this.loading = false;
-        this.beers = beers;
-      }
+    mountBeers() {
+      this.header = "Beers"
+      this.breweries = false;
+      this.styles = false;
+      this.beers = true;
     },
-    async fetchStyles() {
-      if(this.loading!=true){
-        this.loading = true;
-        this.breweries = null;
-        this.beers = null;
-        this.styles = null;
-        this.header = "Styles"
-        let styles = await getStyles(this.bearer_token)
-        this.loading = false;
-        this.styles = styles;
-
-      }
+    mountStyles() {
+      this.header = "Styles"
+      this.breweries = false;
+      this.styles = true;
+      this.beers = false;
     }
   }
 }
