@@ -13,6 +13,19 @@ export async function getBreweries(token) {
   return response.data;
 }
 
+export async function getStyles(token) {
+  let response = await
+    axios.get('https://brewery-api.herokuapp.com/styles ',
+    {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+    })
+    
+  return response.data.styles;
+}
+
 export async function getBeers(token) {
   let response = await
   axios.get('https://brewery-api.herokuapp.com/beers?detailed=true',

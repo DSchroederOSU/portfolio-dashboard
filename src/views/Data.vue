@@ -1,29 +1,37 @@
 <template>
 
     <div class="content-container">
+
+      <!--NAV LINKS-->
       <ul class="nav mb-5">
         <li class="nav-item" v-on:click="fetchBreweries">
-          <a class="nav-link active" href="#">Breweries</a>
+          <a class="nav-link active" href="javascript:void(0);">Breweries</a>
         </li>
         <li class="nav-item" v-on:click="fetchBeers">
-          <a class="nav-link" href="#">Beers</a>
+          <a class="nav-link" href="javascript:void(0);">Beers</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Styles</a>
+        <li class="nav-item" v-on:click="fetchStyles">
+          <a class="nav-link" href="javascript:void(0);">Styles</a>
         </li>
       </ul>
       <h1 class=" ml-3" id="header">{{header}}</h1>
+
+      <!--LOADING-->
       <div class="mt-3 ml-3" v-if="loading">
         <div class="spinner-border text-primary align-middle" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
 
+
+      <!--BREWERIES-->
       <div class="mt-3 ml-3" v-if="breweries">
         <div v-for="item in breweries">
           <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
         </div>
       </div>
+
+      <!--BEERS-->
       <div class="mt-3 ml-3" v-if="beers">
         <div class="accordion" id="beerAccordian">
           <div v-for="(item, index) in beers">
@@ -45,13 +53,20 @@
           </div>
         </div>
       </div>
+
+      <!--STYLES-->
+      <div class="mt-3 ml-3" v-if="styles">
+        <ul class="list-group" v-for="item in styles">
+          <li class="list-group-item">{{item.name}}</li> 
+        </ul>
+      </div>
     </div>
 
 </template>
 
 <script>
 import {login} from '../authenticate.js'
-import {getBreweries, getBeers} from '../data_service.js'
+import {getBreweries, getBeers, getStyles} from '../data_service.js'
 import BreweryCard from '@/components/BreweryCard.vue'
 import BeerCard from '@/components/BeerCard.vue'
 
@@ -66,6 +81,7 @@ export default {
       loading : null,
       header : '',
       breweries : null,
+      styles : null,
       beers : null,
       bearer_token : null
     }
@@ -73,9 +89,11 @@ export default {
   async beforeCreate () {
     //let data = await this.axios.get('https://brewery-api.herokuapp.com/breweries')
   },
-  created() {
+  async created() {
     this.header = "Breweries"
     this.fetchBreweries();
+    let token = await login()
+    this.bearer_token = token
   },
   methods: {
     async fetchBreweries() {
@@ -83,9 +101,8 @@ export default {
         this.loading = true;
         this.breweries = null;
         this.beers = null;
+        this.styles = null;
         this.header = "Breweries"
-        let token = await login()
-        this.bearer_token = token
         let breweries = await getBreweries(this.bearer_token)
         this.loading = false;
         this.breweries = breweries.breweries
@@ -96,14 +113,24 @@ export default {
         this.loading = true;
         this.breweries = null;
         this.beers = null;
+        this.styles = null;
         this.header = "Beers"
-        let token = await login()
-        this.bearer_token = token
         let beers = await getBeers(this.bearer_token)
         this.loading = false;
         this.beers = beers
       }
-
+    },
+    async fetchStyles() {
+      if(this.loading!=true){
+        this.loading = true;
+        this.breweries = null;
+        this.beers = null;
+        this.styles = null;
+        this.header = "Styles"
+        let styles = await getStyles(this.bearer_token)
+        this.loading = false;
+        this.styles = styles
+      }
     }
   }
 }
