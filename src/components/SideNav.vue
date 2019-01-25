@@ -2,6 +2,9 @@
   <div id="sidebar">
      <ul class="nav">
        <router-link class="nav-item active" to="/">
+         <a class="nav-link align-middle mx-auto w-100">Home</a>
+       </router-link>
+       <router-link class="nav-item active" to="/dashboard">
          <a class="nav-link align-middle mx-auto w-100">Dashboard</a>
        </router-link>
        <router-link class="nav-item" to="/data">

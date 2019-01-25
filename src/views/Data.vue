@@ -12,6 +12,13 @@
       </li>
     </ul>
     <h1 class=" ml-3" id="header">{{header}}</h1>
+    <div class="mt-3 ml-3" v-if="loading">
+      <div class="spinner-border text-primary align-middle" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+
     <div class="mt-3 ml-3" v-if="breweries">
       <div v-for="item in breweries">
         <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
@@ -45,6 +52,7 @@ export default {
   },
   data : () => {
     return {
+      loading : true,
       header : '',
       breweries : null,
       beers : null,
@@ -60,20 +68,26 @@ export default {
   },
   methods: {
     async fetchBreweries() {
+      this.loading = true;
+      this.breweries = null;
       this.beers = null;
       this.header = "Breweries"
       let token = await login()
       this.bearer_token = token
       let breweries = await getBreweries(this.bearer_token)
+      this.loading = false;
       this.breweries = breweries.breweries
 
     },
     async fetchBeers() {
+      this.loading = true;
       this.breweries = null;
+      this.beers = null;
       this.header = "Beers"
       let token = await login()
       this.bearer_token = token
       let beers = await getBeers(this.bearer_token)
+      this.loading = false;
       this.beers = beers.beer
     }
   }
@@ -84,7 +98,10 @@ export default {
 a {
   text-decoration: none;
 }
-
+.spinner-border{
+  width: 10vw;
+  height: 10vw;
+}
 .view-container{
   height: 100%;
   overflow: hidden;
