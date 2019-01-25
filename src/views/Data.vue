@@ -19,32 +19,31 @@
         </div>
       </div>
 
-
       <div class="mt-3 ml-3" v-if="breweries">
         <div v-for="item in breweries">
           <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
         </div>
       </div>
       <div class="mt-3 ml-3" v-if="beers">
-          <div class="accordion" id="beerAccordian">
-              <div v-for="(item, index) in beers">
-                <div class="card">
-                  <div class="card-header" v-bind:id='`heading${index}`'>
-                    <h2 class="mb-0">
-                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" v-bind:data-target='`#collapse${index}`'
-                        aria-expanded="true" v-bind:aria-controls='`collapse${index}`'>
-                        {{item.brewery}}
-                      </button>
-                    </h2>
-                  </div>
-                  <div v-bind:id='`collapse${index}`' class="collapse" v-bind:aria-labelledby='`heading${index}`' data-parent="#accordionExample">
-                      <div v-for="beer in item.data">
-                        <BeerCard :beer_name="beer.name" :description="item.description" :abv="beer.abv" :ibu="beer.ibu" :brewery="beer.brewery.name"></BeerCard>
-                      </div>
-                  </div>
+        <div class="accordion" id="beerAccordian">
+          <div v-for="(item, index) in beers">
+            <div class="card">
+              <div class="card-header" v-bind:id='`heading${index}`'>
+                <h2 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" v-bind:data-target='`#collapse${index}`'
+                    aria-expanded="true" v-bind:aria-controls='`collapse${index}`'>
+                    {{item.brewery}}
+                  </button>
+                </h2>
+              </div>
+              <div v-bind:id='`collapse${index}`' class="collapse" v-bind:aria-labelledby='`heading${index}`' data-parent="#beerAccordian">
+                <div v-for="beer in item.data">
+                  <BeerCard :beer_name="beer.name" :description="item.description" :abv="beer.abv" :ibu="beer.ibu" :brewery="beer.brewery.name"></BeerCard>
                 </div>
               </div>
+            </div>
           </div>
+        </div>
       </div>
     </div>
 
@@ -64,7 +63,7 @@ export default {
   },
   data : () => {
     return {
-      loading : true,
+      loading : null,
       header : '',
       breweries : null,
       beers : null,
@@ -80,27 +79,31 @@ export default {
   },
   methods: {
     async fetchBreweries() {
-      this.loading = true;
-      this.breweries = null;
-      this.beers = null;
-      this.header = "Breweries"
-      let token = await login()
-      this.bearer_token = token
-      let breweries = await getBreweries(this.bearer_token)
-      this.loading = false;
-      this.breweries = breweries.breweries
-
+      if(this.loading!=true){
+        this.loading = true;
+        this.breweries = null;
+        this.beers = null;
+        this.header = "Breweries"
+        let token = await login()
+        this.bearer_token = token
+        let breweries = await getBreweries(this.bearer_token)
+        this.loading = false;
+        this.breweries = breweries.breweries
+      }
     },
     async fetchBeers() {
-      this.loading = true;
-      this.breweries = null;
-      this.beers = null;
-      this.header = "Beers"
-      let token = await login()
-      this.bearer_token = token
-      let beers = await getBeers(this.bearer_token)
-      this.loading = false;
-      this.beers = beers
+      if(this.loading!=true){
+        this.loading = true;
+        this.breweries = null;
+        this.beers = null;
+        this.header = "Beers"
+        let token = await login()
+        this.bearer_token = token
+        let beers = await getBeers(this.bearer_token)
+        this.loading = false;
+        this.beers = beers
+      }
+
     }
   }
 }
