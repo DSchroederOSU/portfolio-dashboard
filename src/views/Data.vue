@@ -25,8 +25,8 @@
           <BreweryCard :brewery_name="item.name" :facebook="item.facebook_url" :address="item.address"></BreweryCard>
         </div>
       </div>
-      <div class="mt-3 ml-3" v-if="beers"> 
-          <div class="accordion" id="accordionExample">
+      <div class="mt-3 ml-3" v-if="beers">
+          <div class="accordion" id="beerAccordian">
               <div v-for="(item, index) in beers">
                 <div class="card">
                   <div class="card-header" v-bind:id='`heading${index}`'>
