@@ -52,12 +52,13 @@
             </div>
           </div>
         </div>
+
       </div>
 
       <!--STYLES-->
       <div class="mt-3 ml-3" v-if="styles">
         <ul class="list-group" v-for="item in styles">
-          <li class="list-group-item">{{item.name}}</li> 
+          <li class="list-group-item">{{item.name}}</li>
         </ul>
       </div>
     </div>
@@ -95,6 +96,9 @@ export default {
     let token = await login()
     this.bearer_token = token
   },
+  mounted () {
+
+  },
   methods: {
     async fetchBreweries() {
       if(this.loading!=true){
@@ -105,7 +109,7 @@ export default {
         this.header = "Breweries"
         let breweries = await getBreweries(this.bearer_token)
         this.loading = false;
-        this.breweries = breweries.breweries
+        this.breweries = breweries;
       }
     },
     async fetchBeers() {
@@ -117,7 +121,7 @@ export default {
         this.header = "Beers"
         let beers = await getBeers(this.bearer_token)
         this.loading = false;
-        this.beers = beers
+        this.beers = beers;
       }
     },
     async fetchStyles() {
@@ -129,7 +133,8 @@ export default {
         this.header = "Styles"
         let styles = await getStyles(this.bearer_token)
         this.loading = false;
-        this.styles = styles
+        this.styles = styles;
+
       }
     }
   }
@@ -148,6 +153,12 @@ a {
 .spinner-border{
   width: 10vw;
   height: 10vw;
+}
+
+#beerAccordian .card{
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    margin-bottom: 10px;
 }
 
 .Chart {

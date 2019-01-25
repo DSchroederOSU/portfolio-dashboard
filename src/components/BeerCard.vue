@@ -22,3 +22,10 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+.card {
+  border: 0px !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.125) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+</style>

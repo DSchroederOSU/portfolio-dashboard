@@ -10,7 +10,7 @@ export async function getBreweries(token) {
           'Authorization': `Bearer ${token}`
       }
     })
-  return response.data;
+  return response.data.breweries;
 }
 
 export async function getStyles(token) {
@@ -22,7 +22,7 @@ export async function getStyles(token) {
           'Authorization': `Bearer ${token}`
       }
     })
-    
+
   return response.data.styles;
 }
 
