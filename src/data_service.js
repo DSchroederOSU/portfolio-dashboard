@@ -17,7 +17,7 @@ export async function getAllDocuments(token) {
   return count;
 }
 
-export async function getBreweries(token) { 
+export async function getBreweries(token) {
   let response = await
     axios.get('https://brewery-api.herokuapp.com/breweries',
     {
@@ -64,4 +64,17 @@ export async function getBeers(token) {
   });
   return to_return;
 }
+
+export async function getSourceCommits() {
+  let url = 'https://api.github.com/repos/DSchroederOSU/portfolio-dashboard/contributors'
+  let response = await axios.get(url)
+  return response.data[0].contributions
+}
+
+export async function getAPICommits(token) {
+  let url = 'https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors'
+  let response = await axios.get(url)
+  return response.data[0].contributions
+}
+
 //module.exports.login = login();

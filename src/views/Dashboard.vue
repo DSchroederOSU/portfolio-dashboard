@@ -10,20 +10,20 @@
     </div>
 
     <!-- Data -->
-    <div v-show="loaded">
+    <div v-if="loaded">
 
-      <div class="row mt-4 w-100" >
+      <div class="row mt-4" >
         <div class="col-md-3">
-          <TrackerWidget :value='`${this.db_objects}`' :title='`API Objects`' :speed='`1500`'></TrackerWidget>
+          <TrackerWidget :value="db_objects" :title='`API Objects`' :speed='`1500`'></TrackerWidget>
         </div>
         <div class="col-md-3">
-          <TrackerWidget :value='`${this.src_commits}`' :title='`Commits`' :speed='`1500`'></TrackerWidget>
+          <TrackerWidget :value='`${src_commits}`' :title='`App Commits`' :speed='`1500`'></TrackerWidget>
         </div>
         <div class="col-md-3">
-          <TrackerWidget :value='300' :title='`Other`' :speed='`1500`'></TrackerWidget>
+          <TrackerWidget :value='`${api_commits}`' :title='`API Commits`' :speed='`1500`'></TrackerWidget>
         </div>
         <div class="col-md-3">
-          <TrackerWidget :value='`${this.random_num}`' :title='`Random`' :speed='`1500`'></TrackerWidget>
+          <TrackerWidget :value='`${random_num}`' :title='`Random`' :speed='`1500`'></TrackerWidget>
         </div>
       </div>
 
@@ -45,7 +45,6 @@
 
           </div>
         </div>
-
     </div>
 
 
@@ -64,7 +63,7 @@
 </template>
 
 <script>
-import {getAllDocuments} from '../data_service.js'
+import {getAllDocuments, getSourceCommits, getAPICommits} from '../data_service.js'
 import TrackerWidget from '@/components/TrackerWidget.vue'
 import Chart from '@/components/Chart.vue'
 import DynamicChart from '@/components/DynamicChart.vue'
@@ -89,28 +88,11 @@ export default {
     }
   },
   async created () {
-    let api_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/Brewery_API/contributors')
-    let src_commits = await this.axios.get('https://api.github.com/repos/DSchroederOSU/portfolio-dashboard/contributors')
-    let db_objects = await getAllDocuments(this.token)
-
-    this.db_objects = db_objects
-    this.random_num = Math.floor(Math.random() * 2000)
-    this.api_commits = api_commits.data[0].contributions
-    this.src_commits = src_commits.data[0].contributions
+    this.fetch();
+    this.filldata(); 
   },
   updated() {
     this.$nextTick(() => {
-      $('.animate-count').each(function () {
-          $(this).prop('Counter', 0).animate({
-              Counter: $(this).data('to')
-          }, {
-              duration: $(this).data('speed'),
-              easing: 'swing',
-              step: function (now) {
-                  $(this).text(Math.ceil(now));
-              }
-          });
-      });
 
       //set random background color
       let colors = ['#ef5350', '#ffa726', '#66bb6a', '#29b6f6']
@@ -123,13 +105,24 @@ export default {
         $(this).css("background-color", colors.pop());
       });
 
-      this.loaded = true
+
     });
   },
   mounted () {
-    this.filldata();
+
   },
   methods: {
+      async fetch () {
+        this.loaded = false;
+        let src = await getSourceCommits()
+        let api = await getAPICommits()
+        let db = await getAllDocuments(this.token)
+        this.db_objects = db;
+        this.api_commits = api;
+        this.src_commits = src;
+        this.random_num = Math.floor(Math.random() * 2000)
+        this.loaded = true;
+      },
       toggle () {
         this.mount_chart = !this.mount_chart
         setTimeout(function(){
@@ -143,9 +136,6 @@ export default {
           this.chartdata = Array.from({length: 7}, () => Math.floor(Math.random() * 40))
 
           this.mount_chart = true;
-
-
-
       },
       // taken from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
       shuffle (array) {

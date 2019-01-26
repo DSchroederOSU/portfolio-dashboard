@@ -2,30 +2,48 @@
   <div class="widget">
     <i class="fa widget-icon" aria-hidden="true"></i>
     <div class="widget-text-container">
-      <span class="value-span animate-count" v-bind:data-to="`${this.value}`" v-bind:data-speed="`${this.speed}`"></span>
+      <span class="value-span">
+        <animated-number
+          :value="value"
+          :formatValue="formatToPrice"
+          :duration="1000"
+        />
+      </span>
       <span class="title-span">{{title}}</span>
     </div>
-
   </div>
 </template>
 <script>
+import AnimatedNumber from "animated-number-vue";
 
 export default {
   name: 'TrackerWidget',
+  components: {
+    AnimatedNumber
+  },
   props: ['value', 'title', 'speed'],
   data : () => {
     return {
 
     }
   },
-  async created() {
+  mounted() {
 
-  },
-  async mounted () {
-
+    $(`${this.$el.id}`).prop('Counter', 0).animate({
+      Counter: parseInt(this.value)
+    },
+    {
+      duration: parseInt(this.speed),
+      easing: 'swing',
+      step: function (now) {
+        $(this).text(Math.ceil(now));
+      }
+    });
   },
   methods: {
-
+    formatToPrice(value) {
+      return `${value.toFixed(0)}`;
+    }
   }
 
 
