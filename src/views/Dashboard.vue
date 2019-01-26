@@ -33,14 +33,17 @@
             <div class="Chart">
               <h3 style="text-align:center;">A Line Chart of Random Data</h3>
               <h5 style="text-align:center;">Because Why Not?</h5>
-              <chart :height="300" />
+              <chart :styles="chartStyles" />
             </div>
           </div>
           <div class="col-md-6">
-            <div class="Chart" >
+            <div class="Chart">
               <h3 style="text-align:center;">A Dynamically Rendered Chart</h3>
               <a id="clickme" v-on:click="toggle"><h5 style="text-align:center;">Click Me</h5></a>
-              <dynamic-chart v-if="mount_chart" :height="300" :labels='this.labels' :chartdata='this.chartdata' />
+              <div class="chart-container">
+                <dynamic-chart v-if="mount_chart" :styles="chartStyles" :labels='this.labels' :chartdata='this.chartdata' />
+              </div>
+              <span class='d-block'>Hello</span>
             </div>
 
           </div>
@@ -67,6 +70,8 @@ import {getAllDocuments, getSourceCommits, getAPICommits} from '../data_service.
 import TrackerWidget from '@/components/TrackerWidget.vue'
 import Chart from '@/components/Chart.vue'
 import DynamicChart from '@/components/DynamicChart.vue'
+import randomWords from 'random-words';
+
 export default {
   name: 'Dashboard',
   props: ['token'],
@@ -87,25 +92,30 @@ export default {
       mount_chart: false
     }
   },
+  computed: {
+    chartStyles () {
+      return {
+        height: `30vh`,
+        minHeight: `250px`,
+        position: 'relative'
+      }
+    }
+  },
   async created () {
     this.fetch();
-    this.filldata(); 
+    this.filldata();
   },
   updated() {
     this.$nextTick(() => {
-
       //set random background color
       let colors = ['#ef5350', '#ffa726', '#66bb6a', '#29b6f6']
       let icons = ['fa-folder', 'fa-cube', 'fa-tasks', 'fa-globe-americas ']
       $('.widget-icon').each(function () {
         $(this).addClass(icons.pop());
       });
-
       $('.widget').each(function () {
         $(this).css("background-color", colors.pop());
       });
-
-
     });
   },
   mounted () {
@@ -130,10 +140,10 @@ export default {
             }.bind(this), 1000);
       },
       filldata () {
-
+          let l = (10 + Math.floor(Math.random() * 30))
           let colors = ['#ef5350', '#ffa726', '#66bb6a', '#29b6f6']
-          this.labels = this.shuffle(['January', 'February', 'March', 'April', 'May', 'June', 'July'])
-          this.chartdata = Array.from({length: 7}, () => Math.floor(Math.random() * 40))
+          this.labels = randomWords(l)
+          this.chartdata = Array.from({length: l}, () => Math.floor(Math.random() * 100))
 
           this.mount_chart = true;
       },
@@ -175,11 +185,26 @@ export default {
   padding: 30px;
 }
 
-  .Chart {
-    height: 45vh;
-    padding: 20px;
-    box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .4);
-    border-radius: 20px;
-    margin: 50px 0;
-  }
+.chart-container{
+  height: 30vh;
+  min-height: 250px;
+}
+.Chart {
+  min-height: 400px;
+  height: 45vh;
+  padding: 20px;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .4);
+  border-radius: 20px;
+  margin: 50px 0;
+}
+
+.Chart h3{
+  font-size: 1.4vw;
+}
+.Chart h5{
+  font-size: 1.1vw;
+}
+.Chart a{
+  font-size: 1.1vw;
+}
 </style>

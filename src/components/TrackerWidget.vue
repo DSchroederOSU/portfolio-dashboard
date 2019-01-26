@@ -44,9 +44,7 @@ export default {
     formatToPrice(value) {
       return `${value.toFixed(0)}`;
     }
-  }
-
-
+  } 
 }
 </script>
 <style scoped lang="scss">
@@ -83,8 +81,8 @@ export default {
 }
 .widget-icon {
   position: absolute;
-  bottom: -20%;
-  left: -5%;
+  bottom: -10%;
+  left: 0%;
   font-size: 100px;
   width:100px;
   height: 100px;
