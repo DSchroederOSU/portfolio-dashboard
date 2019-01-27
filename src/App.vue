@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <TopNav id="topnav"/>
-    <SideNav/>
-    <router-view id="viewport" :token='`${this.bearer_token}`'/>
+    <div class="row m-0">
+      <div class="col-md-2 p-0">
+        <SideNav/>
+      </div>
+      <div class=" col-md-10 p-0">
+        <TopNav id="topnav"/>
+        <router-view id="viewport" :token='`${this.bearer_token}`'/>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -35,12 +43,8 @@ body {
 
 }
 #viewport{
-  position: absolute;
-  top: 60px;
-  left: 220px;
   overflow: auto;
   height: calc(100% - 60px);
-  width: calc(100% - 220px);
   padding: 30px;
 }
 @media only screen and (max-width: 600px) {

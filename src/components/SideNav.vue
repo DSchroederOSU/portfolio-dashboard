@@ -1,10 +1,12 @@
 <template>
-  <nav id="sidebar" class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav id="sidebar" class="w-100 p-0 navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav flex-column">
+        <div style="height:100px;">
+        </div>
         <router-link class="nav-item active" to="/">
           <a class="nav-link align-middle mx-auto w-100">Dashboard</a>
         </router-link>
@@ -44,8 +46,7 @@ export default {
 #sidebar {
   padding: 0px;
   display: flex;
-  width: 220px;
-  background-color:#f5f5f5;
+  background-color: #343a40!important;
   float: left;
   overflow-y:auto;
   overflow-x:hidden;
@@ -57,6 +58,7 @@ export default {
 }
 
 a {
+  color: #BDC3C7 !important;
   text-decoration: none;
 }
 .nav-item :hover{
@@ -65,11 +67,17 @@ a {
 
 @media only screen and (min-width: 600px) {
   #sidebar{
-    height: calc(100vh - 60px);
+    height: 100vh;
   }
   #navbarNav{
-    padding: 15px;
     height: 100%;
+  }
+  .nav-item {
+    padding: 0px;
+  }
+  #navbarNav .nav-link {
+    padding-left: 35px !important;
+    padding: 15px;
   }
   .navbar-nav{
     width: 100%;
