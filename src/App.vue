@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <div class="row m-0">
-      <div class="col-md-2 p-0">
+      <div id="left-col" class="col-md-auto p-0">
         <SideNav/>
       </div>
-      <div class=" col-md-10 p-0">
-        <TopNav id="topnav"/>
-        <router-view id="viewport" :token='`${this.bearer_token}`'/>
+      <div id="right-col" class="p-0">
+        <div class="d-flex flex-column h-100">
+          <TopNav id="topnav"/>
+          <router-view id="viewport" :token='`${this.bearer_token}`'/>
+        </div>
+
       </div>
     </div>
 
@@ -39,12 +42,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-body {
-
+#right-col{
+  width: 87vw;
+}
+#left-col{
+  width: 13vw;
 }
 #viewport{
   overflow: auto;
-  height: calc(100% - 60px);
   padding: 30px;
 }
 @media only screen and (max-width: 600px) {

@@ -56,7 +56,9 @@ export default {
   display: inline-block;
   width: 100%;
 }
-
+#sidebar{
+  height: 100vh;
+}
 a {
   color: #BDC3C7 !important;
   text-decoration: none;
@@ -65,10 +67,9 @@ a {
   background-color: #6C7A89;
 }
 
+
 @media only screen and (min-width: 600px) {
-  #sidebar{
-    height: 100vh;
-  }
+
   #navbarNav{
     height: 100%;
   }
@@ -84,11 +85,16 @@ a {
     height: 100%;
   }
 }
-@media only screen and (max-width: 600px) {
 
+
+@media only screen and (max-width: 600px) {
+  #sidebar{
+    height: 60px;
+  }
   #sidebar .nav-item{
     width: auto;
   }
+
   #sidebar {
     min-width: 100vw;
     max-width:100vw;
