@@ -20,7 +20,7 @@ export default {
 <style scoped lang="scss">
 
 nav{
-  
+  position: static !important;
   height: 60px;
   vertical-align: middle;
   padding: 0px;

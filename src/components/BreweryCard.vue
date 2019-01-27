@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="item in breweries">
-      <div class="card" style="width: 20vw;">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{item.name}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{item.address}}</h6>
@@ -39,3 +39,13 @@ export default {
 
 }
 </script>
+<style scoped lang="scss">
+.card {
+  width: 50%;
+}
+@media only screen and (max-width: 600px) {
+  .card {
+    width: 100%;
+  }
+}
+</style>

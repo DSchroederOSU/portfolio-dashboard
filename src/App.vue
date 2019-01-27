@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TopNav/>
+    <TopNav id="topnav"/>
     <SideNav/>
     <router-view id="viewport" :token='`${this.bearer_token}`'/>
   </div>
@@ -34,7 +34,6 @@ export default {
 body {
 
 }
-
 #viewport{
   position: absolute;
   top: 60px;
@@ -43,5 +42,19 @@ body {
   height: calc(100% - 60px);
   width: calc(100% - 220px);
   padding: 30px;
+}
+@media only screen and (max-width: 600px) {
+  #topnav {
+    display: none;
+  }
+  #viewport{
+    position: absolute;
+    top: 60px;
+    left: 0px;
+    overflow: auto;
+    height: 100%;
+    width: 100vw;
+    padding: 30px;
+  }
 }
 </style>
