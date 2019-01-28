@@ -18,16 +18,16 @@
       <div id="menu" class="w-100">
         <ul class="navbar-nav flex-column">
           <router-link class="nav-item active" data-toggle="collapse" data-target="#navbarNav" to="/">
-            <a class="nav-link align-middle mx-auto w-100">Dashboard</a>
+            <a class="nav-link align-middle m-0 pl-4 w-100">Dashboard</a>
           </router-link>
           <router-link class="nav-item" data-toggle="collapse" data-target="#navbarNav" to="/data">
-            <a class="nav-link align-middle mx-auto w-100">Data</a>
+            <a class="nav-link align-middle m-0 pl-4 w-100">Data</a>
           </router-link>
           <router-link class="nav-item" data-toggle="collapse" data-target="#navbarNav" to="/architecture">
-            <a class="nav-link align-middle mx-auto w-100">Architecture</a>
+            <a class="nav-link align-middle m-0 pl-4 w-100">Architecture</a>
           </router-link>
           <router-link class="nav-item" data-toggle="collapse" data-target="#navbarNav" to="/contribute">
-            <a class="nav-link align-middle mx-auto w-100">Contribute</a>
+            <a class="nav-link align-middle m-0 pl-4 w-100">Contribute</a>
           </router-link>
         </ul>
       </div>
@@ -53,7 +53,7 @@ a {
   color: #BDC3C7 !important;
   text-decoration: none;
 }
- 
+
 
 @media only screen and (min-width: 768px) {
   #sidebar .nav-item{
