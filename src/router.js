@@ -4,6 +4,7 @@ import Dashboard from '@/views/Dashboard.vue'
 import Architecture from '@/views/Architecture.vue'
 import Data from '@/views/Data.vue'
 import Home from '@/views/Home.vue'
+import Contribute from '@/views/Contribute.vue'
 
 Vue.use(Router)
 
@@ -15,7 +16,7 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Dashboard
-    }, 
+    },
     {
       path: '/architecture',
       name: 'architecture',
@@ -25,6 +26,11 @@ export default new Router({
       path: '/data',
       name: 'data',
       component: Data
+    },
+    {
+      path: '/contribute',
+      name: 'contribute',
+      component: Contribute
     }
   ]
 })
