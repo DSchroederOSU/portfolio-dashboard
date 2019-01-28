@@ -38,6 +38,7 @@ export default {
     let token = await login()
     this.bearer_token = token
   },
+  
 }
 </script>
 
@@ -52,7 +53,7 @@ export default {
   overflow: auto;
   padding: 30px;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   #topnav {
     display: none;
   }

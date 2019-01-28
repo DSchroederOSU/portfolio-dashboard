@@ -14,24 +14,22 @@
   -->
   <div class="nav-wrapper">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-      <a class="navbar-brand" href="#">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse ml-auto flex-grow-0" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li id="user-dropdown" class="nav-item dropdown">
+          <li id="user-dropdown" class="nav-item bg-dark dropdown">
             <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <div id="user-icons" class="">
+              <div id="user-icons" class="mr-4">
                 <span class="arrow-down ml-2 mt-4 "></span>
-                <img src="../assets/circled_user_female1600.png" class="mr-4"/>
+                <img src="../assets/circled_user_female1600.png" class=""/>
               </div>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg-right mt-2" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-menu bg-dark dropdown-menu-lg-right mt-2" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="javascript:void(0);">Dummy Profile</a>
+              <a class="dropdown-item" href="javascript:void(0);">Dummy Preferences</a>
+              <a class="dropdown-item" href="javascript:void(0);">Dummy Settings</a>
             </div>
           </li>
         </ul>
@@ -71,6 +69,19 @@ span{
   font-size: 0.8vw;
   color: #BDC3C7 !important;
 }
+
+.dropdown-menu {
+  border: none;
+}
+
+.dropdown-menu a{
+  color: #BDC3C7 !important;
+}
+
+.dropdown-menu a:hover{
+  background-color: #414649;
+}
+
 .dropdown-toggle::after {
     display:none ;
 }
@@ -90,7 +101,7 @@ span{
   padding: 2px;
   border-radius: 10px;
 }
-#user-dropdown div:hover{
+#user-icons:hover{
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 10px 2px rgba(65, 70, 73, 0.4);
   box-shadow: 0px 0px 10px 2px rgba(65, 70, 73, 0.4);
