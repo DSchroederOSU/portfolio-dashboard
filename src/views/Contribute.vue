@@ -1,5 +1,8 @@
 <template>
 <div >
+  <div class="alert alert-success w-100 d-none" style="position: relative; top: -20px;" role="alert">
+    Beer Successfuly Added!
+  </div>
   <div id="form-row" class="row">
     <div id="breweryForm" class="col-md-6 mx-auto">
       <h3>Step 1: Add The Brewery</h3>
@@ -146,17 +149,16 @@ export default {
 
   },
   methods: {
-    parseData () {
-      getBeerInfo(`https://cors-anywhere.herokuapp.com/${this.untappedURL}`)
+    async parseData () {
+      await getBeerInfo(`https://cors-anywhere.herokuapp.com/${this.untappedURL}`)
+      $('.alert').removeClass('d-none')
     },
 
     submitBrewery () {
-      console.log(this.brewery_object)
       $('#breweryForm').addClass('d-none')
       $('#styleForm').removeClass('d-none')
     },
     submitStyle () {
-      console.log(this.style_object)
       $('#styleForm').addClass('d-none')
       $('#beerForm').removeClass('d-none')
     },
@@ -164,7 +166,6 @@ export default {
 
       this.beer_object.brewery = this.brewery_object.name;
       this.beer_object.style = this.style_object.name;
-        console.log(this.beer_object)
     }
   }
 }
