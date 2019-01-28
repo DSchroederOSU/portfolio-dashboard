@@ -5,11 +5,10 @@
         <SideNav/>
       </div>
       <div id="right-col" class="p-0">
-        <div class="d-flex flex-column h-100">
+        <div id="content-wrapper" class="d-flex flex-column">
           <TopNav id="topnav"/>
           <router-view id="viewport" :token='`${this.bearer_token}`'/>
         </div>
-
       </div>
     </div>
 
@@ -38,11 +37,14 @@ export default {
     let token = await login()
     this.bearer_token = token
   },
-  
+
 }
 </script>
 
 <style scoped lang="scss">
+#content-wrapper {
+    max-height: 100vh;
+}
 #right-col{
   width: 87vw;
 }
@@ -53,15 +55,20 @@ export default {
   overflow: auto;
   padding: 30px;
 }
+
 @media only screen and (max-width: 768px) {
   #topnav {
     display: none;
+  }
+  #left-col{
+    height: 60px;
+
   }
   #viewport{
     position: absolute;
     top: 60px;
     left: 0px;
-    overflow: auto;
+    overflow-x: scroll;
     height: 100%;
     width: 100vw;
     padding: 30px;
