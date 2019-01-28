@@ -60,7 +60,7 @@ nav{
 }
 
 .nav-wrapper {
-  padding: 10px;
+  padding: 5px;
   background-color: #343a40!important;
 }
 

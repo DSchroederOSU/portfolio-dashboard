@@ -89,7 +89,7 @@
    </div>
    <div class="row">
      <hr class="mt-5" width=75%  align=CENTER>
-     <div class="col-md-6 mt-5 mx-auto">
+     <div class="col-md-6 mt-3 mx-auto">
 
        <h5>Or input an Untapped URL and let the scraper work it's magic!</h5>
        <form>
@@ -175,6 +175,9 @@ export default {
   #form-row{
     min-height: 50vh;
     overflow-x: hidden;
+  }
+  .form-group {
+    margin-bottom: 10px;
   }
 
   #styleForm{
