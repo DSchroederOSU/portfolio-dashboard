@@ -22,10 +22,7 @@
           </router-link>
           <router-link class="nav-item" data-toggle="collapse" data-target="#navbarNav" to="/data">
             <a class="nav-link align-middle m-0 pl-4 w-100">Data</a>
-          </router-link>
-          <router-link class="nav-item" data-toggle="collapse" data-target="#navbarNav" to="/architecture">
-            <a class="nav-link align-middle m-0 pl-4 w-100">Architecture</a>
-          </router-link>
+          </router-link> 
           <router-link class="nav-item" data-toggle="collapse" data-target="#navbarNav" to="/contribute">
             <a class="nav-link align-middle m-0 pl-4 w-100">Contribute</a>
           </router-link>

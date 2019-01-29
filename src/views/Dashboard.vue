@@ -37,13 +37,13 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="Chart">
-              <h3 style="text-align:center;">A Dynamically Rendered Chart</h3>
-              <a id="clickme" v-on:click="toggle"><h5 style="text-align:center;">Click Me</h5></a>
+            <div class="Chart" style="text-align:center;">
+              <h3 >A Dynamically Rendered Chart</h3>
+              <a id="clickme" v-on:click="toggle"><h5 >Click Me</h5></a>
               <div class="chart-container">
                 <dynamic-chart v-if="mount_chart" :styles="chartStyles" :labels='this.labels' :chartdata='this.chartdata' />
               </div>
-              <span class='d-block'>Hello</span>
+              <span id="chart-description" class='mx-auto'>Random Word Lables and Random Data Points.</span>
             </div>
 
           </div>
@@ -185,6 +185,11 @@ export default {
   padding: 30px;
 }
 
+#chart-description{
+  color: #7f8c8d;
+  font-size: calc(8px + 0.5vw);
+}
+
 .chart-container{
   height: 30vh;
   min-height: 250px;
@@ -199,10 +204,10 @@ export default {
 }
 
 .Chart h3{
-  font-size: 1.4vw;
+  font-size: calc(10px + 0.7vw);
 }
 .Chart h5{
-  font-size: 1.1vw;
+  font-size: calc(9px + 0.5vw);
 }
 .Chart a{
   font-size: 1.1vw;
