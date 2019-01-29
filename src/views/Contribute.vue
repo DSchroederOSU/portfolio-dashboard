@@ -146,14 +146,22 @@ export default {
   },
   async mounted () {
 
-
   },
   methods: {
     async parseData () {
-      await getBeerInfo(`https://cors-anywhere.herokuapp.com/${this.untappedURL}`)
-      $('.alert').removeClass('d-none')
-    },
+      console.log()
+      if(this.checkURL(`${this.untappedURL}`)){
+          await getBeerInfo(`${this.untappedURL}`)
+          $('.alert').removeClass('d-none')
+      }
+      else {
+        $('.alert').removeClass('d-none')
+        $('.alert').removeClass('alert-success')
+        $('.alert').addClass('alert-danger')
+        $('.alert').html( 'Please enter a beer page in the format https://untappd.com/b/example-beer/id.' )
+      }
 
+    },
     submitBrewery () {
       $('#breweryForm').addClass('d-none')
       $('#styleForm').removeClass('d-none')
@@ -166,6 +174,10 @@ export default {
 
       this.beer_object.brewery = this.brewery_object.name;
       this.beer_object.style = this.style_object.name;
+    },
+    checkURL (url) {
+      let regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)([a-zA-Z0-9])+(\.)+(com\/b\/)([a-zA-z\-])+(\/[0-9]+)/;
+      return regex.test(url);
     }
   }
 }
